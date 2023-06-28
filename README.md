@@ -1,65 +1,46 @@
 # Practica Cloud Java 2022-2023
 
-Aitor Iturrioz & Pablo Rubio 
+Aitor Iturrioz & Pablo Rubio
 
 Este repositorio es el código inicial del ejercicio principal del Curso Cloud de Tknika.
 
-Es una rest API simple con tres métodos:
 
-    GET persona/{id}
+**Instrucciones de comandos de  instalación en Ubuntu**
 
-    PUT persona/add pasando la persona en el cuerpot
+Eliminar versiones previas:
 
-    GET persona/init para introducir 3 datos en la BBDD.
+```bash
+sudo apt-get remove docker docker-engine docker.io containerd runc
+```
 
-Utiliza Maven como gestor de paquetes, por lo que:
+Configura el repositorio de apt:
 
-Para empaquetar el proyecto usar:
+```bash
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+```
 
-    mvn package
+```bash
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+```
 
-Para realizar los test:
+```bash
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
 
-    mvn test
+Actualiza los repositorios apt:
 
-Generar la documentación:
+```bash
+sudo apt update
+```
 
-    mvn javadoc:javadoc
+Instala Docker y sus plugins:
 
-Tras hacer mvn package para ejecutar la aplicación debemos ejecutar.
-
-    java -jar ./targe/*.jar
-
-Para utilizar una BBDD, primero debemos añadir la dependencia del conector mysql al pom.xml y luego modificar el fichero PersistenceBeanConfiguration.java
-
-DE:
-
-    @Bean
-    IPersonaGBD getIPersonaGDB() throws InvalidAttributeValueException, NumberFormatException, IOException
-    {
-      File f = new File("datos.txt");
-      
-      return new TextBD(f);
-    }
-
-
-A:
-
-    @Bean
-    IPersonaGBD getIPersonaGDB() throws InvalidAttributeValueException, NumberFormatException, IOException
-    {
-        Session session = getSession();
-
-        return new HibernatePersonaDB(session);
-
-    }
-    
-
-Opciones de la aplicación java.
-
-    -Ddbhost: Dirección del host de la BBDD, default: 127.0.0.1
-    -Ddbport: Puerto de la BBDD, default: 3306
-    -Ddbuser: Ususario de la BBDD, default: root
-    -Ddbpassword: Contraseña de la BBDD, default: root
-    -Ddbdatabase: nombre de la base de datos, default: database1
-    -Dport: Puerto en el que se ejecuta la aplicación, default: 8080
+```bash
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
