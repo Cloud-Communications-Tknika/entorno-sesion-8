@@ -44,3 +44,15 @@ Instala Docker y sus plugins:
 ```bash
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
+
+Añade el usuario del sistema al grupo Docker, para no tener que usar sudo:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+Aplica los cambios (espero que sin tener que reiniciar)
+
+```bash
+newgrp docker
+```
