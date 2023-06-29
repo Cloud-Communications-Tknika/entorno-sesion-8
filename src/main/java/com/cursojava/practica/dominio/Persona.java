@@ -17,6 +17,7 @@ public class Persona {
     private boolean alive;
 
 
+    public Persona(){}
     
     public Persona(String id, String name, int age)
     {
