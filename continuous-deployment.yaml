@@ -1,0 +1,20 @@
+name: continuos
+
+on:
+  push:
+    branches:
+    - 'main'
+      steps: 
+      - name: executing remote ssh commands using password-
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ubuntu
+          password: ${{ secrets.AWS_HOST:KEY }}
+          script: |
+            cd /home/ubuntu/entorno-sesion-8
+            git pull origin main
+            sudo docker compose down
+            sudo docker rmi entorno-sesion-8-app
+            mvn package -DskipTest
+            sudo docker compose up -d
